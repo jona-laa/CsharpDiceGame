@@ -11,6 +11,7 @@ namespace DiceGame
         // Tracks dice rolls and amount of rolls
         public static List<int> rolls = new List<int>();
         public static int numOfRolls = 0;
+        public static string rollOptions;
 
 
 
@@ -53,27 +54,46 @@ namespace DiceGame
 
 
 
+        static bool InputCheck()
+        {
+            int result;
+
+            if (int.TryParse(rollOptions, out result))
+            {
+                if (Convert.ToInt32(rollOptions) < 5 && Convert.ToInt32(rollOptions) > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Written by: Jonathan Laasonen");
+
+
             // Reset roll trackers for each game
             rolls.Clear();
             numOfRolls = 0;
 
 
 
-            // Ask user for number of rolls
-            int rollOptions = 0;
-            while (rollOptions < 1 | rollOptions > 4)
+            // Axe user for number of rolls
+            while (!InputCheck())
             {
-                Console.WriteLine("How many rolls? (1 - 4)");
-                rollOptions = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("How many rolls? (1 - 5)");
+                rollOptions = Console.ReadLine();
             }
 
 
 
             // Roll dice as many times as user input
-            for (int i = 0; i < rollOptions; i++)
+            for (int i = 0; i < Convert.ToInt32(rollOptions); i++)
             {
                 int roll = SingleRoll();
 
